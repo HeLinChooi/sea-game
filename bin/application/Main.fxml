@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="216.0" prefWidth="480.0" styleClass="anchor" stylesheets="@application.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="432.0" minWidth="960.0" prefHeight="432.0" prefWidth="960.0" styleClass="anchor" stylesheets="@application.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Controller">
    <children>
-      <TextArea editable="false" layoutX="7.0" layoutY="8.0" prefHeight="39.0" prefWidth="124.0" promptText="daf" text="Sea Dirtyness: " />
-      <TextArea editable="false" layoutX="7.0" layoutY="47.0" prefHeight="8.0" prefWidth="124.0" promptText="daf" text="Points: " />
+      <TextArea fx:id="dirtyness" editable="false" layoutX="7.0" layoutY="8.0" prefHeight="39.0" prefWidth="124.0" promptText="daf" text="Sea Dirtyness: " />
+      <TextArea fx:id="points" editable="false" layoutX="7.0" layoutY="47.0" prefHeight="8.0" prefWidth="124.0" promptText="daf" text="Points: " />
+      <ImageView fx:id="myImage" fitHeight="39.0" fitWidth="84.0" layoutX="834.0" layoutY="369.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@images/fish.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

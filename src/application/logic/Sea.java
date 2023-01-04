@@ -5,7 +5,7 @@ public class Sea {
 	private int dirtyness = 0;
 	private int points = 0;
 	private Sea() {}
-	static Sea getInstance() {
+	public static Sea getInstance() {
 		if(uniqueInstance == null) {
 			uniqueInstance = new Sea();
 		}
