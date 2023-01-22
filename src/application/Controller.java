@@ -10,15 +10,26 @@ import application.rubbish.Rubbish;
 import application.rubbish.SimpleRubbishFactory;
 import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
+import javafx.beans.binding.Bindings;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextArea;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
 import javafx.util.Duration;
 
 public class Controller implements Initializable {
 	// the name of field annotated with @FXML must be same as fx:id
+	@FXML
+	private AnchorPane backgroundAnchorPane;
 	@FXML
 	private ImageView myImage;
 	@FXML
@@ -49,8 +60,10 @@ public class Controller implements Initializable {
 		generateRubbish();
 
 		// set value of dirtyness
-		dirtyness.appendText(String.valueOf(sea.getDirtyness()));
+		dirtyness.textProperty().bind(Bindings.convert(sea.dirtynessProperty()));
 		points.appendText(String.valueOf(sea.getPoints()));
+
+		changeBackgroundBasedOnDirtyness();
 	}
 
 	public void generateRubbish() {
@@ -67,7 +80,46 @@ public class Controller implements Initializable {
 					rubbishAnchorPane.getChildren().addAll(r1.getImageView(), r2.getImageView());
 				});
 			}
-		}, 0, 10000);
+		}, 0, 3000);
+	}
+
+	public void changeBackgroundBasedOnDirtyness() {
+		Sea.getInstance().dirtynessProperty().addListener(new ChangeListener<Number>() {
+			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+				if ((int) newValue > 6) {
+					Platform.runLater(() -> {
+
+						BackgroundImage bgImg = new BackgroundImage(
+								new Image(getClass().getResourceAsStream("images/background-polluted.jpg"),
+										backgroundAnchorPane.getWidth(), backgroundAnchorPane.getHeight(), true, false),
+								BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
+								BackgroundSize.DEFAULT);
+						backgroundAnchorPane.setBackground(new Background(bgImg));
+					});
+				} else if ((int) newValue > 4) {
+					Platform.runLater(() -> {
+
+						BackgroundImage bgImg = new BackgroundImage(
+								new Image(getClass().getResourceAsStream("images/background-semi-polluted.jpg"),
+										backgroundAnchorPane.getWidth(), backgroundAnchorPane.getHeight(), true, false),
+								BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
+								BackgroundSize.DEFAULT);
+						backgroundAnchorPane.setBackground(new Background(bgImg));
+					});
+				} else if ((int) newValue > 2) {
+					Platform.runLater(() -> {
+
+						BackgroundImage bgImg = new BackgroundImage(
+								new Image(getClass().getResourceAsStream("images/background-little-polluted.jpg"),
+										backgroundAnchorPane.getWidth(), backgroundAnchorPane.getHeight(), true, false),
+								BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
+								BackgroundSize.DEFAULT);
+						backgroundAnchorPane.setBackground(new Background(bgImg));
+					});
+				}
+
+			}
+		});
 	}
 
 }
