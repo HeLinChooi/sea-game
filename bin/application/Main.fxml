@@ -14,5 +14,13 @@
             <Image url="@images/fish.png" />
          </image>
       </ImageView>
+      <AnchorPane fx:id="rubbishAnchorPane" layoutX="15.0" layoutY="270.0" prefHeight="147.0" prefWidth="930.0">
+         <children>
+            <ImageView fx:id="rubbishImage" fitHeight="59.0" fitWidth="50.0" focusTraversable="true" pickOnBounds="true" preserveRatio="true" rotate="48.6">
+               <image>
+                  <Image url="@images/plastic-bottle.png" />
+               </image>
+            </ImageView>
+         </children></AnchorPane>
    </children>
 </AnchorPane>
