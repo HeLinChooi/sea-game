@@ -13,6 +13,19 @@ import java.util.ArrayList;
 import application.logic.Sea;
 import application.rubbish.Rubbish;
 import application.rubbish.SimpleRubbishFactory;
+import application.strategy.Appear;
+import application.strategy.BigSmall;
+import application.strategy.Disappear;
+import application.strategy.Fade;
+import application.strategy.HorizontalMove;
+import application.strategy.NormalRotate;
+import application.strategy.SpinRotate;
+import application.strategy.VerticalMove;
+import application.strategy.model.Crab;
+import application.strategy.model.Fish;
+import application.strategy.model.JellyFish;
+import application.strategy.model.StarFish;
+import application.strategy.model.Turtle;
 import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
@@ -98,26 +111,7 @@ public class Controller implements Initializable {
 
   @Override
   public void initialize(URL arg0, ResourceBundle arg1) {
-    songs = new ArrayList<File>();
-
-    directory = new File("music");
-
-    // files will get all music from music folder
-    files = directory.listFiles();
-
-    if (files != null) {
-
-      for (File file : files) {
-        songs.add(file);
-        System.out.println(file);
-
-      }
-
-    }
-
-    media = new Media(songs.get(songNumber).toURI().toString());
-    mediaPlayer = new MediaPlayer(media);
-    mediaPlayer.play();
+    playMedia();
     // songLabel.setText(songs.get(songNumber).getName());
 
     myFish.setVisible(false);
@@ -125,6 +119,7 @@ public class Controller implements Initializable {
     myJellyFish.setVisible(false);
     myCrab.setVisible(false);
     myTurtle.setVisible(false);
+
     Sea sea = Sea.getInstance();
     // animation
     TranslateTransition translate = new TranslateTransition();
@@ -202,7 +197,22 @@ public class Controller implements Initializable {
   }
 
   public void playMedia() {
+    songs = new ArrayList<File>();
+    directory = new File("music");
 
+    // files will get all music from music folder
+    files = directory.listFiles();
+
+    if (files != null) {
+      for (File file : files) {
+        songs.add(file);
+        System.out.println(file);
+      }
+    }
+
+    media = new Media(songs.get(songNumber).toURI().toString());
+    mediaPlayer = new MediaPlayer(media);
+    mediaPlayer.play();
   }
 
   public void pauseMedia() {

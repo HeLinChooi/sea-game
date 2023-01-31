@@ -23,7 +23,7 @@ public class Main extends Application {
 			stage.setScene(scene);
 			stage.setResizable(false);
 			// stage.getIcons().add(icon);
-			stage.setTitle("   Sea Game");
+			stage.setTitle("Sea Game");
 			stage.show();
 		} catch(Exception e) {
 			e.printStackTrace();
