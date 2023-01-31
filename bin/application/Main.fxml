@@ -12,8 +12,7 @@
       <TextArea fx:id="dirtyness" editable="false" layoutX="7.0" layoutY="24.0" prefHeight="23.0" prefWidth="124.0" promptText="daf" />
       <Text layoutX="7.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sea Dirtyness: " />
       <TextArea fx:id="points" editable="false" layoutX="142.0" layoutY="24.0" prefHeight="8.0" prefWidth="124.0" promptText="daf" text="Points: " />
-      <ImageView fx:id="myImage" fitHeight="39.0" fitWidth="84.0" layoutX="834.0" layoutY="369.0" pickOnBounds="true" preserveRatio="true">
-      <!-- <ImageView fx:id="myFish" fitHeight="39.0" fitWidth="84.0" layoutX="834.0" layoutY="369.0" pickOnBounds="true" preserveRatio="true"> -->
+      <ImageView fx:id="myFish" fitHeight="39.0" fitWidth="84.0" layoutX="834.0" layoutY="369.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@images/fish.png" />
          </image>
