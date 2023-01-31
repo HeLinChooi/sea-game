@@ -2,27 +2,50 @@ package application;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import application.logic.Sea;
+import application.rubbish.Rubbish;
+import application.rubbish.SimpleRubbishFactory;
 import javafx.animation.TranslateTransition;
+import javafx.application.Platform;
+import javafx.beans.binding.Bindings;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
 import javafx.util.Duration;
 
-public class Controller implements Initializable{
+public class Controller implements Initializable {
 	// the name of field annotated with @FXML must be same as fx:id
 	@FXML
+	private AnchorPane backgroundAnchorPane;
+	@FXML
 	private ImageView myImage;
+	@FXML
+	private ImageView rubbishImage;
 	@FXML
 	private TextArea dirtyness;
 	@FXML
 	private TextArea points;
+	@FXML
+	private AnchorPane rubbishAnchorPane;
+
+	private SimpleRubbishFactory simpleRubbishFactory = new SimpleRubbishFactory();
+
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		
+
 		Sea sea = Sea.getInstance();
 		// animation
 		TranslateTransition translate = new TranslateTransition();
@@ -32,10 +55,71 @@ public class Controller implements Initializable{
 		translate.setAutoReverse(true);
 		translate.setByX(-250);
 		translate.play();
-		
+
+		// add rubbish
+		generateRubbish();
+
 		// set value of dirtyness
-		dirtyness.appendText(String.valueOf(sea.getDirtyness()));
+		dirtyness.textProperty().bind(Bindings.convert(sea.dirtynessProperty()));
 		points.appendText(String.valueOf(sea.getPoints()));
+
+		changeBackgroundBasedOnDirtyness();
+	}
+
+	public void generateRubbish() {
+		Timer timer = new Timer();
+		timer.schedule(new TimerTask() {
+
+			@Override
+			public void run() { // Function runs every MINUTES minutes.
+				// Run the code you want here
+				Platform.runLater(() -> {
+					Rubbish r1 = simpleRubbishFactory.createRubbish("bottle", rubbishAnchorPane);
+					Rubbish r2 = simpleRubbishFactory.createRubbish("bag", rubbishAnchorPane);
+
+					rubbishAnchorPane.getChildren().addAll(r1.getImageView(), r2.getImageView());
+				});
+			}
+		}, 0, 3000);
+	}
+
+	public void changeBackgroundBasedOnDirtyness() {
+		Sea.getInstance().dirtynessProperty().addListener(new ChangeListener<Number>() {
+			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+				if ((int) newValue > 6) {
+					Platform.runLater(() -> {
+
+						BackgroundImage bgImg = new BackgroundImage(
+								new Image(getClass().getResourceAsStream("images/background-polluted.jpg"),
+										backgroundAnchorPane.getWidth(), backgroundAnchorPane.getHeight(), true, false),
+								BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
+								BackgroundSize.DEFAULT);
+						backgroundAnchorPane.setBackground(new Background(bgImg));
+					});
+				} else if ((int) newValue > 4) {
+					Platform.runLater(() -> {
+
+						BackgroundImage bgImg = new BackgroundImage(
+								new Image(getClass().getResourceAsStream("images/background-semi-polluted.jpg"),
+										backgroundAnchorPane.getWidth(), backgroundAnchorPane.getHeight(), true, false),
+								BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
+								BackgroundSize.DEFAULT);
+						backgroundAnchorPane.setBackground(new Background(bgImg));
+					});
+				} else if ((int) newValue > 2) {
+					Platform.runLater(() -> {
+
+						BackgroundImage bgImg = new BackgroundImage(
+								new Image(getClass().getResourceAsStream("images/background-little-polluted.jpg"),
+										backgroundAnchorPane.getWidth(), backgroundAnchorPane.getHeight(), true, false),
+								BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
+								BackgroundSize.DEFAULT);
+						backgroundAnchorPane.setBackground(new Background(bgImg));
+					});
+				}
+
+			}
+		});
 	}
 
 }
