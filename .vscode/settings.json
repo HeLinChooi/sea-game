@@ -1,0 +1,15 @@
+{
+  "java.dependency.packagePresentation": "hierarchical",
+  "java.jdt.ls.java.home": "C:/Program Files/Java/jdk-17",
+  "java.project.referencedLibraries": [
+    "lib/**/*.jar",
+    "d:\\Program or SDK\\javafx-sdk-19\\lib\\javafx.base.jar",
+    "d:\\Program or SDK\\javafx-sdk-19\\lib\\javafx.controls.jar",
+    "d:\\Program or SDK\\javafx-sdk-19\\lib\\javafx.fxml.jar",
+    "d:\\Program or SDK\\javafx-sdk-19\\lib\\javafx.graphics.jar",
+    "d:\\Program or SDK\\javafx-sdk-19\\lib\\javafx.media.jar",
+    "d:\\Program or SDK\\javafx-sdk-19\\lib\\javafx.swing.jar",
+    "d:\\Program or SDK\\javafx-sdk-19\\lib\\javafx.web.jar",
+    "d:\\Program or SDK\\javafx-sdk-19\\lib\\javafx-swt.jar"
+  ]
+}
