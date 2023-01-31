@@ -36,6 +36,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
@@ -131,13 +133,13 @@ public class Controller implements Initializable {
     translate.play();
 
     // add rubbish
-    generateRubbish();
+    // generateRubbish();
 
     // set value of dirtyness
     dirtyness.textProperty().bind(Bindings.convert(sea.dirtynessProperty()));
     points.appendText(String.valueOf(sea.getPoints()));
 
-    changeBackgroundBasedOnDirtyness();
+    // changeBackgroundBasedOnDirtyness();
   }
 
   public void generateRubbish() {
@@ -222,6 +224,23 @@ public class Controller implements Initializable {
   // Fish Button Method
   public void fishButton(ActionEvent e) throws IOException {
 
+    // if Fish is visible
+    if (fishVisible) {
+      fish.setBehaviour(new Appear());
+      fishVisible = (boolean) fish.performAction(fishVisible, myFish);
+    } else {
+      fish.setBehaviour(new Disappear());
+      fishVisible = (boolean) fish.performAction(fishVisible, myFish);
+    }
+
+    // end of FishButton Method
+  }
+  public void fishButtonOnKeyboard(KeyEvent e) throws IOException {
+    KeyCode code = e.getCode();
+    if(code == KeyCode.ENTER){
+      System.out.println("Is ENTER");
+      // TODO: Call the command function here
+    }
     // if Fish is visible
     if (fishVisible) {
       fish.setBehaviour(new Appear());

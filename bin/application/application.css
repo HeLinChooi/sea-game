@@ -11,11 +11,14 @@
 }
 
 .button:hover {
-	-fx-background-color : #075757;
-	-fx-background-radius : 30 0 0 30;
+	-fx-background-color : #570707;
 }
 
 .button:pressed {
 	-fx-background-color : #239c9c;
+}
+.button:focus, .button:focus-visible {
+	-fx-background-color : #9c8623;
 	-fx-background-radius : 30 0 0 30;	
+  -fx-focus-color: #9c2323; 
 }

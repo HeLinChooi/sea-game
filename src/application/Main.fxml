@@ -18,15 +18,7 @@
         <Image url="@images/fish.png" />
       </image>
     </ImageView>
-    <AnchorPane fx:id="rubbishAnchorPane" layoutX="15.0" layoutY="270.0" prefHeight="147.0" prefWidth="930.0">
-      <children>
-        <ImageView fx:id="rubbishImage" fitHeight="59.0" fitWidth="50.0" focusTraversable="true" pickOnBounds="true" preserveRatio="true" rotate="48.6">
-          <image>
-            <Image url="@images/plastic-bottle.png" />
-          </image>
-        </ImageView>
-      </children>
-    </AnchorPane>
+    <AnchorPane fx:id="rubbishAnchorPane" layoutX="15.0" layoutY="270.0" prefHeight="147.0" prefWidth="930.0" />
 
     <ImageView fx:id="myStarFish" fitHeight="39.0" fitWidth="84.0" layoutX="681.0" layoutY="294.0" pickOnBounds="true" preserveRatio="true">
       <image>
@@ -52,7 +44,7 @@
       </image>
     </ImageView>
 
-    <Button layoutX="14.0" layoutY="395.0" mnemonicParsing="false" onAction="#fishButton" text="Fish" textFill="WHITE" />
+    <Button layoutX="419.0" layoutY="30.0" mnemonicParsing="false" onAction="#fishButton" onKeyPressed="#fishButtonOnKeyboard" text="Fish" textFill="WHITE" />
     <Button layoutX="94.0" layoutY="395.0" mnemonicParsing="false" onAction="#starFishButton" text="Star Fish" textAlignment="CENTER" textFill="WHITE" />
     <Button layoutX="195.0" layoutY="395.0" mnemonicParsing="false" onAction="#jellyFishButton" text="Jelly Fish" textAlignment="CENTER" textFill="WHITE" />
     <Button layoutX="302.0" layoutY="395.0" mnemonicParsing="false" onAction="#crabButton" text="Crab" textAlignment="CENTER" textFill="WHITE" />
