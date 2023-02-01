@@ -47,7 +47,7 @@ public class ShippingDockManager {
                     case 2:
                         System.out.println("");
                         int shipNameIndex = rand.nextInt(shipNames.size());
-                        tranquilHarbor.addShip(new Ship(shipNames.get(shipNameIndex)));
+                        // tranquilHarbor.addShip(new Ship(shipNames.get(shipNameIndex)));
                         shipNames.remove(shipNameIndex);
                         System.out.println(tranquilHarbor.toString());
                         break;

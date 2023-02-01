@@ -7,6 +7,9 @@ import java.util.TimerTask;
 import java.io.IOException;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
 
 import application.command.AppearCommand;
 import application.command.DisappearCommand;
@@ -14,6 +17,8 @@ import application.command.VisibilityManager;
 import application.logic.Sea;
 import application.rubbish.Rubbish;
 import application.rubbish.SimpleRubbishFactory;
+import application.state.Dock;
+import application.state.Ship;
 import application.strategy.BigSmall;
 import application.strategy.Fade;
 import application.strategy.HorizontalMove;
@@ -36,7 +41,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
@@ -50,8 +54,6 @@ public class Controller implements Initializable {
   // the name of field annotated with @FXML must be same as fx:id
   @FXML
   private AnchorPane backgroundAnchorPane;
-  @FXML
-  private ImageView rubbishImage;
   @FXML
   private TextArea dirtyness;
   @FXML
@@ -68,19 +70,32 @@ public class Controller implements Initializable {
   private ImageView myCrab;
   @FXML
   private ImageView myTurtle;
+  @FXML
+  private ImageView dockImage;
+  @FXML
+  private ImageView boatImage;
+
   VisibilityManager visibilityManager;
 
   private File directory;
   private File[] files;
-
   private ArrayList<File> songs;
-
   private int songNumber;
-
   private Media media;
   private MediaPlayer mediaPlayer;
 
   private SimpleRubbishFactory simpleRubbishFactory = new SimpleRubbishFactory();
+
+  private Dock dock = new Dock("Peaceful Dock");
+  List<String> shipNames = new ArrayList<>(Arrays.asList("Serenity Voyager", "Tranquility Explorer", "Calm Seas",
+      "Peaceful Journey", "Relaxation Voyager", "Serene Voyager", "Gentle Waves", "Ocean Oasis",
+      "Paradise Explorer", "Island Retreat", "Coastal Breeze", "Lazy Days", "Sunny Seas", "Paradise Cruiser",
+      "Relaxing Oceans", "Ocean Bliss", "Tropical Retreat", "Peaceful Waters", "Relax & Sail",
+      "Island Escape", "Beachcomber", "Ocean Harmony", "Sea of Tranquility", "Restful Voyage",
+      "Serenity Explorer", "Peaceful Explorer", "Tranquil Voyager", "Calming Seas", "Relaxing Waters",
+      "Ocean Sanctuary"));
+  Random rand = new Random();
+
   // creating sea creature objects
   Fish fish = new Fish(new HorizontalMove(), new NormalRotate(), new Fade());
   StarFish starFish = new StarFish(new VerticalMove(), new SpinRotate(), new BigSmall());
@@ -90,7 +105,7 @@ public class Controller implements Initializable {
 
   @Override
   public void initialize(URL arg0, ResourceBundle arg1) {
-    playMedia();
+    // playMedia();
     // songLabel.setText(songs.get(songNumber).getName());
 
     myFish.setVisible(false);
@@ -185,7 +200,7 @@ public class Controller implements Initializable {
     if (files != null) {
       for (File file : files) {
         songs.add(file);
-        System.out.println(file);
+        // System.out.println(file);
       }
     }
 
@@ -304,4 +319,10 @@ public class Controller implements Initializable {
     turtleVisibilityControl();
   }
 
+  public void addShip() {
+    int shipNameIndex = rand.nextInt(shipNames.size());
+    Ship ship = new Ship(shipNames.get(shipNameIndex));
+    dock.addShip(ship, backgroundAnchorPane);
+    shipNames.remove(shipNameIndex);
+  }
 }

@@ -49,6 +49,12 @@
     <Button layoutX="195.0" layoutY="395.0" mnemonicParsing="false" onAction="#jellyFishButton" text="Jelly Fish" textAlignment="CENTER" textFill="WHITE" />
     <Button layoutX="302.0" layoutY="395.0" mnemonicParsing="false" onAction="#crabButton" text="Crab" textAlignment="CENTER" textFill="WHITE" />
     <Button layoutX="391.0" layoutY="395.0" mnemonicParsing="false" onAction="#turtleButton" text="Turtle" textAlignment="CENTER" textFill="WHITE" />
+      <ImageView fx:id="dockImage" fitHeight="150.0" fitWidth="200.0" layoutX="810.0" layoutY="176.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@images/dock.png" />
+         </image>
+      </ImageView>
+      <Button layoutX="879.0" layoutY="23.0" mnemonicParsing="false" onAction="#addShip" text="Add Ship" textFill="WHITE" />
 
   </children>
 </AnchorPane>
