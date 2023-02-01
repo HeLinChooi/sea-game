@@ -10,12 +10,13 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.ArrayList;
 
+import application.command.AppearCommand;
+import application.command.DisappearCommand;
+import application.command.VisibilityManager;
 import application.logic.Sea;
 import application.rubbish.Rubbish;
 import application.rubbish.SimpleRubbishFactory;
-import application.strategy.Appear;
 import application.strategy.BigSmall;
-import application.strategy.Disappear;
 import application.strategy.Fade;
 import application.strategy.HorizontalMove;
 import application.strategy.NormalRotate;
@@ -38,6 +39,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
@@ -58,8 +60,6 @@ public class Controller implements Initializable {
   @FXML
   private AnchorPane backgroundAnchorPane;
   @FXML
-  private ImageView myImage;
-  @FXML
   private ImageView rubbishImage;
   @FXML
   private TextArea dirtyness;
@@ -77,6 +77,8 @@ public class Controller implements Initializable {
   private ImageView myCrab;
   @FXML
   private ImageView myTurtle;
+  VisibilityManager visibilityManager;
+
   private File directory;
   private File[] files;
 
@@ -96,20 +98,15 @@ public class Controller implements Initializable {
   private SimpleRubbishFactory simpleRubbishFactory = new SimpleRubbishFactory();
   // creating sea creature objects and setting their initial visibility
   // 1
-  private boolean fishVisible = false;
-  Fish fish = new Fish(new Disappear(), new HorizontalMove(), new NormalRotate(), new Fade());
+  Fish fish = new Fish(new HorizontalMove(), new NormalRotate(), new Fade());
   // 2
-  private boolean starFishVisible = false;
-  StarFish starFish = new StarFish(new Disappear(), new VerticalMove(), new SpinRotate(), new BigSmall());
+  StarFish starFish = new StarFish(new VerticalMove(), new SpinRotate(), new BigSmall());
   // 3
-  private boolean jellyFishVisible = false;
-  JellyFish jellyFish = new JellyFish(new Disappear(), new VerticalMove(), new SpinRotate(), new Fade());
+  JellyFish jellyFish = new JellyFish(new VerticalMove(), new SpinRotate(), new Fade());
   // 4
-  private boolean crabVisible = false;
-  Crab crab = new Crab(new Disappear(), new HorizontalMove(), new NormalRotate(), new BigSmall());
+  Crab crab = new Crab(new HorizontalMove(), new NormalRotate(), new BigSmall());
   // 5
-  private boolean turtleVisible = false;
-  Turtle turtle = new Turtle(new Disappear(), new HorizontalMove(), new NormalRotate(), new Fade());
+  Turtle turtle = new Turtle(new HorizontalMove(), new NormalRotate(), new Fade());
 
   @Override
   public void initialize(URL arg0, ResourceBundle arg1) {
@@ -121,24 +118,15 @@ public class Controller implements Initializable {
     myJellyFish.setVisible(false);
     myCrab.setVisible(false);
     myTurtle.setVisible(false);
+    visibilityManager = new VisibilityManager();
 
     Sea sea = Sea.getInstance();
-    // animation
-    TranslateTransition translate = new TranslateTransition();
-    translate.setNode(myImage);
-    translate.setDuration(Duration.millis(2000));
-    translate.setCycleCount(TranslateTransition.INDEFINITE);
-    translate.setAutoReverse(true);
-    translate.setByX(-250);
-    translate.play();
-
-    // add rubbish
-    // generateRubbish();
-
     // set value of dirtyness
     dirtyness.textProperty().bind(Bindings.convert(sea.dirtynessProperty()));
     points.appendText(String.valueOf(sea.getPoints()));
 
+    // add rubbish
+    // generateRubbish();
     // changeBackgroundBasedOnDirtyness();
   }
 
@@ -217,100 +205,107 @@ public class Controller implements Initializable {
     mediaPlayer.play();
   }
 
-  public void pauseMedia() {
+  private void fishVisibilityControl() {
+    if (!myFish.isVisible()) {
+      visibilityManager.setCommand(new AppearCommand(myFish));
+      visibilityManager.process();
+    } else {
+      visibilityManager.setCommand(new DisappearCommand(myFish));
+      visibilityManager.process();
+    }
+  }
+  private void starFishVisibilityControl() {
+    if (!myStarFish.isVisible()) {
+      visibilityManager.setCommand(new AppearCommand(myStarFish));
+      visibilityManager.process();
+    } else {
+      visibilityManager.setCommand(new DisappearCommand(myStarFish));
+      visibilityManager.process();
+    }
+  }
+  private void jellyFishVisibilityControl() {
+    if (!myJellyFish.isVisible()) {
+      visibilityManager.setCommand(new AppearCommand(myJellyFish));
+      visibilityManager.process();
+    } else {
+      visibilityManager.setCommand(new DisappearCommand(myJellyFish));
+      visibilityManager.process();
+    }
+  }
+  private void crabVisibilityControl() {
+    if (!myCrab.isVisible()) {
+      visibilityManager.setCommand(new AppearCommand(myCrab));
+      visibilityManager.process();
+    } else {
+      visibilityManager.setCommand(new DisappearCommand(myCrab));
+      visibilityManager.process();
+    }
+  }
+  private void turtleVisibilityControl() {
+    if (!myTurtle.isVisible()) {
+      visibilityManager.setCommand(new AppearCommand(myTurtle));
+      visibilityManager.process();
+    } else {
+      visibilityManager.setCommand(new DisappearCommand(myTurtle));
+      visibilityManager.process();
+    }
+  }
 
+
+  public void fishButtonOnKeyboard(KeyEvent e) throws IOException {
+    KeyCode code = e.getCode();
+    if (code == KeyCode.ENTER) {
+      fishVisibilityControl();
+    }
+  }
+  public void starFishButtonOnKeyboard(KeyEvent e) throws IOException {
+    KeyCode code = e.getCode();
+    if (code == KeyCode.ENTER) {
+      starFishVisibilityControl();
+    }
+  }
+  public void jellyFishButtonOnKeyboard(KeyEvent e) throws IOException {
+    KeyCode code = e.getCode();
+    if (code == KeyCode.ENTER) {
+      jellyFishVisibilityControl();
+    }
+  }
+  public void crabButtonOnKeyboard(KeyEvent e) throws IOException {
+    KeyCode code = e.getCode();
+    if (code == KeyCode.ENTER) {
+      crabVisibilityControl();
+    }
+  }
+  public void turtleButtonOnKeyboard(KeyEvent e) throws IOException {
+    KeyCode code = e.getCode();
+    if (code == KeyCode.ENTER) {
+      turtleVisibilityControl();
+    }
   }
 
   // Fish Button Method
-  public void fishButton(ActionEvent e) throws IOException {
-
-    // if Fish is visible
-    if (fishVisible) {
-      fish.setBehaviour(new Appear());
-      fishVisible = (boolean) fish.performAction(fishVisible, myFish);
-    } else {
-      fish.setBehaviour(new Disappear());
-      fishVisible = (boolean) fish.performAction(fishVisible, myFish);
-    }
-
-    // end of FishButton Method
-  }
-  public void fishButtonOnKeyboard(KeyEvent e) throws IOException {
-    KeyCode code = e.getCode();
-    if(code == KeyCode.ENTER){
-      System.out.println("Is ENTER");
-      // TODO: Call the command function here
-    }
-    // if Fish is visible
-    if (fishVisible) {
-      fish.setBehaviour(new Appear());
-      fishVisible = (boolean) fish.performAction(fishVisible, myFish);
-    } else {
-      fish.setBehaviour(new Disappear());
-      fishVisible = (boolean) fish.performAction(fishVisible, myFish);
-    }
-
-    // end of FishButton Method
+  public void fishButton(MouseEvent e) throws IOException {
+    fishVisibilityControl();
   }
 
   // StarFish Button Method
   public void starFishButton(ActionEvent e) throws IOException {
-
-    // if StarFish is visible
-    if (starFishVisible) {
-      starFish.setBehaviour(new Appear());
-      starFishVisible = (boolean) starFish.performAction(starFishVisible, myStarFish);
-    } else {
-      starFish.setBehaviour(new Disappear());
-      starFishVisible = (boolean) starFish.performAction(starFishVisible, myStarFish);
-    }
-
-    // end of StarFishButton Method
+    starFishVisibilityControl();
   }
 
   // JellyFish Button Method
   public void jellyFishButton(ActionEvent e) throws IOException {
-
-    // if StarFish is visible
-    if (jellyFishVisible) {
-      jellyFish.setBehaviour(new Appear());
-      jellyFishVisible = (boolean) jellyFish.performAction(jellyFishVisible, myJellyFish);
-    } else {
-      jellyFish.setBehaviour(new Disappear());
-      jellyFishVisible = (boolean) jellyFish.performAction(jellyFishVisible, myJellyFish);
-    }
-
-    // end of JellyFishButton Method
+    jellyFishVisibilityControl();
   }
 
   // Crab Button Method
   public void crabButton(ActionEvent e) throws IOException {
-
-    // if StarFish is visible
-    if (crabVisible) {
-      crab.setBehaviour(new Appear());
-      crabVisible = (boolean) crab.performAction(crabVisible, myCrab);
-    } else {
-      crab.setBehaviour(new Disappear());
-      crabVisible = (boolean) crab.performAction(crabVisible, myCrab);
-    }
-
-    // end of CrabButton Method
+    crabVisibilityControl();
   }
 
   // Turtle Button Method
   public void turtleButton(ActionEvent e) throws IOException {
-
-    // if StarFish is visible
-    if (turtleVisible) {
-      turtle.setBehaviour(new Appear());
-      turtleVisible = (boolean) turtle.performAction(turtleVisible, myTurtle);
-    } else {
-      turtle.setBehaviour(new Disappear());
-      turtleVisible = (boolean) turtle.performAction(turtleVisible, myTurtle);
-    }
-
-    // end of TurtleButton Method
+    turtleVisibilityControl();
   }
 
 }
