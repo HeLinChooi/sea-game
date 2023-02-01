@@ -4,10 +4,10 @@ import javafx.animation.TranslateTransition;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 
-public class VerticalMove implements HoriVertiMove{
+public class VerticalMove implements Moves{
 
 	@Override
-	public void move(ImageView creatureImage) {
+	public void performMove(ImageView creatureImage) {
 		// TODO Auto-generated method stub
 		
 		TranslateTransition translate = new TranslateTransition();

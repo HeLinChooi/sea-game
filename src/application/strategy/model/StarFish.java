@@ -1,14 +1,12 @@
 package application.strategy.model;
 
-import application.strategy.HoriVertiMove;
-import application.strategy.RotateMoves;
-import application.strategy.SpecialMoves;
+import application.strategy.Moves;
 
 public class StarFish extends SeaCreature {
 
-	public StarFish(HoriVertiMove horiVertiMove,
-			RotateMoves rotateMoves, SpecialMoves specialMoves) {
-		super(horiVertiMove, rotateMoves, specialMoves);
+	public StarFish(Moves moves) {
+		super(moves);
+		// TODO Auto-generated constructor stub
 	}
 
 }

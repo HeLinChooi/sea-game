@@ -2,8 +2,8 @@ package application.strategy;
 
 import javafx.scene.image.ImageView;
 
-public interface HoriVertiMove {
+public interface Moves {
 	
-	void move(ImageView creatureImage);
+	void performMove(ImageView creatureImage);
 
 }

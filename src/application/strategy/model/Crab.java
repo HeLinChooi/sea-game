@@ -1,15 +1,13 @@
 package application.strategy.model;
 
-import application.strategy.HoriVertiMove;
-import application.strategy.RotateMoves;
-import application.strategy.SpecialMoves;
+import application.strategy.Moves;
 
 public class Crab extends SeaCreature {
 
-	public Crab(HoriVertiMove horiVertiMove,
-			RotateMoves rotateMoves, SpecialMoves specialMoves) {
+	public Crab(Moves moves) {
 		
-		super(horiVertiMove, rotateMoves, specialMoves);
+		super(moves);
+		// TODO Auto-generated constructor stub
 		
 	}
 

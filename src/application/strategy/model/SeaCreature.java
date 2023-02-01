@@ -1,33 +1,18 @@
 package application.strategy.model;
 
-import application.strategy.HoriVertiMove;
-import application.strategy.RotateMoves;
-import application.strategy.SpecialMoves;
+import application.strategy.Moves;
 import javafx.scene.image.ImageView;
 
 public abstract class SeaCreature {
 	
-	HoriVertiMove horiVertiMove;
-	RotateMoves rotateMoves;
-	SpecialMoves specialMoves;
+	Moves moves;
 	
-	
-	public SeaCreature(HoriVertiMove horiVertiMove,
-			RotateMoves rotateMoves, SpecialMoves specialMoves) {
-		this.horiVertiMove = horiVertiMove;
-		this.rotateMoves = rotateMoves;
-		this.specialMoves = specialMoves;
+	public SeaCreature(Moves moves) {
+		this.moves = moves;
 	}
 
 	public void performMove(ImageView creatureImage) {
-		horiVertiMove.move(creatureImage);
+		moves.performMove(creatureImage);
 	}
 	
-	public void performRotate(ImageView creatureImage) {
-		rotateMoves.rotate(creatureImage);
-	}
-	
-	public void performSpecials(ImageView creatureImage) {
-		specialMoves.special(creatureImage);
-	}
 }
