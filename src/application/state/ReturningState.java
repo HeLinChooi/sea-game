@@ -20,7 +20,7 @@ public class ReturningState implements DockState {
 
     @Override
     public final boolean makeShippingWork() {
-        System.out.println(ship.getSHIP_NAME() + " is deciding whether returning to the dock.");
+        System.out.println(ship.getSHIP_NAME() + " is deciding whether returning to the dock...");
         if (rand.nextBoolean()) {
             ship.setIsThisShipReturning(Ship.RETURNING);
             System.out.println(ship.getSHIP_NAME() + " is returning to the dock.");

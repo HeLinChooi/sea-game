@@ -26,13 +26,6 @@ public class Ship {
     imageView.setPreserveRatio(true);
     imageView.setX(721);
     imageView.setY(224);
-
-    // animation
-    TranslateTransition translate = new TranslateTransition();
-		translate.setNode(imageView);
-		translate.setDuration(Duration.millis(5000));
-		translate.setByX(-850);
-		translate.play();
   }
 
   public ImageView getImageView() {
@@ -41,6 +34,20 @@ public class Ship {
 
   public void setState(DockState newState) {
     objState = newState;
+    if (newState instanceof ShippingCargoState) {
+      // animation
+      TranslateTransition translate2 = new TranslateTransition();
+      translate2.setNode(imageView);
+      translate2.setDuration(Duration.millis(5000));
+      translate2.setByX(-850);
+      translate2.play();
+    } else if (newState instanceof ReturningState) {
+      TranslateTransition translate = new TranslateTransition();
+      translate.setNode(imageView);
+      translate.setDuration(Duration.millis(5000));
+      translate.setByX(850);
+      translate.play();
+    }
   }
 
   public int isThisShipReturning() {

@@ -142,7 +142,7 @@ public class Controller implements Initializable {
     }, 0, 5000);
   }
 
-  public void changeBackgroundBasedOnDirtyness() {
+  private void changeBackgroundBasedOnDirtyness() {
     Sea.getInstance().dirtynessProperty().addListener(new ChangeListener<Number>() {
       public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
         if ((int) newValue > 6) {
@@ -190,7 +190,7 @@ public class Controller implements Initializable {
     });
   }
 
-  public void playMedia() {
+  private void playMedia() {
     songs = new ArrayList<File>();
     directory = new File("music");
 
@@ -324,5 +324,11 @@ public class Controller implements Initializable {
     Ship ship = new Ship(shipNames.get(shipNameIndex));
     dock.addShip(ship, backgroundAnchorPane);
     shipNames.remove(shipNameIndex);
+  }
+
+  public void makeShipWorking() {
+    System.out.println("");
+    dock.makeShippingWork();
+    System.out.println(dock.toString());
   }
 }
