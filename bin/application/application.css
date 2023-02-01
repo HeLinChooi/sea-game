@@ -3,19 +3,29 @@
     -fx-background-repeat: no-repeat;   
     -fx-background-size: cover;
     -fx-background-position: center center;
+    background-image:url('./images/background.jpg');
+    background-repeat: no-repeat;   
+    background-size: cover;
+    background-position: center center;
 }
 
 .button {
+  background-color: #239c9c;
 	-fx-background-color : #239c9c;
 	-fx-background-radius : 30 0 0 30;
 }
 
 .button:hover {
-	-fx-background-color : #075757;
-	-fx-background-radius : 30 0 0 30;
+  background-color: #1d8484;
+	-fx-background-color : #1d8484;
 }
 
 .button:pressed {
+  background-color: #239c9c;
 	-fx-background-color : #239c9c;
+}
+.button:focus, .button:focus-visible, .button:active {
+  background-color: #125d5d;
+	-fx-background-color : #125d5d;
 	-fx-background-radius : 30 0 0 30;	
 }
