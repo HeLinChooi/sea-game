@@ -6,9 +6,10 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.io.IOException;
 import java.io.File;
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
 
 import application.command.AppearCommand;
 import application.command.DisappearCommand;
@@ -16,6 +17,8 @@ import application.command.VisibilityManager;
 import application.logic.Sea;
 import application.rubbish.Rubbish;
 import application.rubbish.SimpleRubbishFactory;
+import application.state.Dock;
+import application.state.Ship;
 import application.strategy.BigSmall;
 import application.strategy.Fade;
 import application.strategy.HorizontalMove;
@@ -27,7 +30,6 @@ import application.strategy.model.Fish;
 import application.strategy.model.JellyFish;
 import application.strategy.model.StarFish;
 import application.strategy.model.Turtle;
-import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.beans.value.ChangeListener;
@@ -39,19 +41,12 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
-import javafx.util.Duration;
-import javafx.animation.RotateTransition;
-import javafx.animation.TranslateTransition;
-import javafx.event.ActionEvent;
-import javafx.util.Duration;
-import javafx.scene.image.ImageView;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
@@ -59,8 +54,6 @@ public class Controller implements Initializable {
   // the name of field annotated with @FXML must be same as fx:id
   @FXML
   private AnchorPane backgroundAnchorPane;
-  @FXML
-  private ImageView rubbishImage;
   @FXML
   private TextArea dirtyness;
   @FXML
@@ -77,42 +70,46 @@ public class Controller implements Initializable {
   private ImageView myCrab;
   @FXML
   private ImageView myTurtle;
+  @FXML
+  private ImageView dockImage;
+  @FXML
+  private ImageView boatImage;
+  @FXML
+  private TextArea dockStatus;
+
   VisibilityManager visibilityManager;
 
   private File directory;
   private File[] files;
-
   private ArrayList<File> songs;
-
   private int songNumber;
-  private int[] speeds = { 50, 100, 125, 150 };
-
-  private Timer timer;
-  private TimerTask task;
-
-  private boolean running;
-
   private Media media;
   private MediaPlayer mediaPlayer;
 
   private SimpleRubbishFactory simpleRubbishFactory = new SimpleRubbishFactory();
-  // creating sea creature objects and setting their initial visibility
-  // 1
+
+  private Dock dock;
+  List<String> shipNames = new ArrayList<>(Arrays.asList("Serenity Voyager", "Tranquility Explorer", "Calm Seas",
+      "Peaceful Journey", "Relaxation Voyager", "Serene Voyager", "Gentle Waves", "Ocean Oasis",
+      "Paradise Explorer", "Island Retreat", "Coastal Breeze", "Lazy Days", "Sunny Seas", "Paradise Cruiser",
+      "Relaxing Oceans", "Ocean Bliss", "Tropical Retreat", "Peaceful Waters", "Relax & Sail",
+      "Island Escape", "Beachcomber", "Ocean Harmony", "Sea of Tranquility", "Restful Voyage",
+      "Serenity Explorer", "Peaceful Explorer", "Tranquil Voyager", "Calming Seas", "Relaxing Waters",
+      "Ocean Sanctuary"));
+  Random rand = new Random();
+
+  // creating sea creature objects
   Fish fish = new Fish(new HorizontalMove(), new NormalRotate(), new Fade());
-  // 2
   StarFish starFish = new StarFish(new VerticalMove(), new SpinRotate(), new BigSmall());
-  // 3
   JellyFish jellyFish = new JellyFish(new VerticalMove(), new SpinRotate(), new Fade());
-  // 4
   Crab crab = new Crab(new HorizontalMove(), new NormalRotate(), new BigSmall());
-  // 5
   Turtle turtle = new Turtle(new HorizontalMove(), new NormalRotate(), new Fade());
 
   @Override
   public void initialize(URL arg0, ResourceBundle arg1) {
-    playMedia();
+    // playMedia();
     // songLabel.setText(songs.get(songNumber).getName());
-
+    dock = new Dock("Peaceful Dock", dockStatus);
     myFish.setVisible(false);
     myStarFish.setVisible(false);
     myJellyFish.setVisible(false);
@@ -123,11 +120,11 @@ public class Controller implements Initializable {
     Sea sea = Sea.getInstance();
     // set value of dirtyness
     dirtyness.textProperty().bind(Bindings.convert(sea.dirtynessProperty()));
-    points.appendText(String.valueOf(sea.getPoints()));
+    points.textProperty().bind(Bindings.convert(sea.pointsProperty()));
 
     // add rubbish
-    // generateRubbish();
-    // changeBackgroundBasedOnDirtyness();
+    generateRubbish();
+    changeBackgroundBasedOnDirtyness();
   }
 
   public void generateRubbish() {
@@ -135,7 +132,7 @@ public class Controller implements Initializable {
     timer.schedule(new TimerTask() {
 
       @Override
-      public void run() { // Function runs every MINUTES minutes.
+      public void run() { // Function runs every 5 seconds.
         // Run the code you want here
         Platform.runLater(() -> {
           Rubbish r1 = simpleRubbishFactory.createRubbish("bottle", rubbishAnchorPane);
@@ -144,10 +141,10 @@ public class Controller implements Initializable {
           rubbishAnchorPane.getChildren().addAll(r1.getImageView(), r2.getImageView());
         });
       }
-    }, 0, 3000);
+    }, 0, 5000);
   }
 
-  public void changeBackgroundBasedOnDirtyness() {
+  private void changeBackgroundBasedOnDirtyness() {
     Sea.getInstance().dirtynessProperty().addListener(new ChangeListener<Number>() {
       public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
         if ((int) newValue > 6) {
@@ -180,13 +177,22 @@ public class Controller implements Initializable {
                 BackgroundSize.DEFAULT);
             backgroundAnchorPane.setBackground(new Background(bgImg));
           });
+        } else {
+          Platform.runLater(() -> {
+            BackgroundImage bgImg = new BackgroundImage(
+                new Image(getClass().getResourceAsStream("images/background.jpg"),
+                    backgroundAnchorPane.getWidth(), backgroundAnchorPane.getHeight(), true, false),
+                BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
+                BackgroundSize.DEFAULT);
+            backgroundAnchorPane.setBackground(new Background(bgImg));
+          });
         }
 
       }
     });
   }
 
-  public void playMedia() {
+  private void playMedia() {
     songs = new ArrayList<File>();
     directory = new File("music");
 
@@ -196,7 +202,7 @@ public class Controller implements Initializable {
     if (files != null) {
       for (File file : files) {
         songs.add(file);
-        System.out.println(file);
+        // System.out.println(file);
       }
     }
 
@@ -214,6 +220,7 @@ public class Controller implements Initializable {
       visibilityManager.process();
     }
   }
+
   private void starFishVisibilityControl() {
     if (!myStarFish.isVisible()) {
       visibilityManager.setCommand(new AppearCommand(myStarFish));
@@ -223,6 +230,7 @@ public class Controller implements Initializable {
       visibilityManager.process();
     }
   }
+
   private void jellyFishVisibilityControl() {
     if (!myJellyFish.isVisible()) {
       visibilityManager.setCommand(new AppearCommand(myJellyFish));
@@ -232,6 +240,7 @@ public class Controller implements Initializable {
       visibilityManager.process();
     }
   }
+
   private void crabVisibilityControl() {
     if (!myCrab.isVisible()) {
       visibilityManager.setCommand(new AppearCommand(myCrab));
@@ -241,6 +250,7 @@ public class Controller implements Initializable {
       visibilityManager.process();
     }
   }
+
   private void turtleVisibilityControl() {
     if (!myTurtle.isVisible()) {
       visibilityManager.setCommand(new AppearCommand(myTurtle));
@@ -251,31 +261,34 @@ public class Controller implements Initializable {
     }
   }
 
-
   public void fishButtonOnKeyboard(KeyEvent e) throws IOException {
     KeyCode code = e.getCode();
     if (code == KeyCode.ENTER) {
       fishVisibilityControl();
     }
   }
+
   public void starFishButtonOnKeyboard(KeyEvent e) throws IOException {
     KeyCode code = e.getCode();
     if (code == KeyCode.ENTER) {
       starFishVisibilityControl();
     }
   }
+
   public void jellyFishButtonOnKeyboard(KeyEvent e) throws IOException {
     KeyCode code = e.getCode();
     if (code == KeyCode.ENTER) {
       jellyFishVisibilityControl();
     }
   }
+
   public void crabButtonOnKeyboard(KeyEvent e) throws IOException {
     KeyCode code = e.getCode();
     if (code == KeyCode.ENTER) {
       crabVisibilityControl();
     }
   }
+
   public void turtleButtonOnKeyboard(KeyEvent e) throws IOException {
     KeyCode code = e.getCode();
     if (code == KeyCode.ENTER) {
@@ -284,28 +297,40 @@ public class Controller implements Initializable {
   }
 
   // Fish Button Method
-  public void fishButton(MouseEvent e) throws IOException {
+  public void fishButton() throws IOException {
     fishVisibilityControl();
   }
 
   // StarFish Button Method
-  public void starFishButton(ActionEvent e) throws IOException {
+  public void starFishButton() throws IOException {
     starFishVisibilityControl();
   }
 
   // JellyFish Button Method
-  public void jellyFishButton(ActionEvent e) throws IOException {
+  public void jellyFishButton() throws IOException {
     jellyFishVisibilityControl();
   }
 
   // Crab Button Method
-  public void crabButton(ActionEvent e) throws IOException {
+  public void crabButton() throws IOException {
     crabVisibilityControl();
   }
 
   // Turtle Button Method
-  public void turtleButton(ActionEvent e) throws IOException {
+  public void turtleButton() throws IOException {
     turtleVisibilityControl();
   }
 
+  public void addShip() {
+    int shipNameIndex = rand.nextInt(shipNames.size());
+    Ship ship = new Ship(shipNames.get(shipNameIndex));
+    dock.addShip(ship, backgroundAnchorPane, dockStatus);
+    shipNames.remove(shipNameIndex);
+  }
+
+  public void makeShipWorking() {
+    System.out.println("");
+    dock.makeShippingWork(dockStatus);
+    System.out.println(dock.toString());
+  }
 }

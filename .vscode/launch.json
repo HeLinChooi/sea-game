@@ -6,6 +6,13 @@
   "configurations": [
     {
       "type": "java",
+      "name": "Launch ShippingDockManager",
+      "request": "launch",
+      "mainClass": "SeaDesignPattern/application.state.ShippingDockManager",
+      "projectName": "SeaDesignPattern"
+    },
+    {
+      "type": "java",
       "name": "Launch Current File",
       "request": "launch",
       "mainClass": "${file}"
