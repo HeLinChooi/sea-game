@@ -111,25 +111,20 @@ public class Controller implements Initializable {
   //VerticalMove()
   //SpinRotate()
 	//1
-	private boolean fishVisible = false;
 	Fish fish = new Fish(new HorizontalMove());
 	//2
-	private boolean starFishVisible = false;
 	StarFish starFish = new StarFish(new SpinRotate());
 	//3
-	private boolean jellyFishVisible = false;
 	JellyFish jellyFish = new JellyFish(new VerticalMove());
 	//4
-	private boolean crabVisible = false;
 	Crab crab = new Crab(new HorizontalMove());
 	//5
-	private boolean turtleVisible = false;
 	Turtle turtle = new Turtle(new HorizontalMove());
 
   @Override
   public void initialize(URL arg0, ResourceBundle arg1) {
-    // playMedia();
-    // songLabel.setText(songs.get(songNumber).getName());
+    playMedia();
+
     dock = new Dock("Peaceful Dock", dockStatus);
     myFish.setVisible(false);
     myStarFish.setVisible(false);
