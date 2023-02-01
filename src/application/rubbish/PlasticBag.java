@@ -20,7 +20,7 @@ public class PlasticBag implements Rubbish {
   Image image;
   ImageView imageView;
   AnchorPane rubbishAnchorPane;
-  int dirtiness = 1;
+  int dirtiness = 2;
 
   public PlasticBag(AnchorPane rubbishAnchorPane) {
     this.rubbishAnchorPane = rubbishAnchorPane;
