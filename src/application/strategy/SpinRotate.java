@@ -5,10 +5,10 @@ import javafx.animation.TranslateTransition;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 
-public class SpinRotate implements RotateMoves {
+public class SpinRotate implements Moves {
 
 	@Override
-	public void rotate(ImageView creatureImage) {
+	public void performMove(ImageView creatureImage) {
 		// TODO Auto-generated method stub
 		RotateTransition rotate = new RotateTransition();
 		rotate.setNode(creatureImage);

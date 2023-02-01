@@ -19,10 +19,10 @@ import application.rubbish.Rubbish;
 import application.rubbish.SimpleRubbishFactory;
 import application.state.Dock;
 import application.state.Ship;
-import application.strategy.BigSmall;
-import application.strategy.Fade;
+
+
 import application.strategy.HorizontalMove;
-import application.strategy.NormalRotate;
+
 import application.strategy.SpinRotate;
 import application.strategy.VerticalMove;
 import application.strategy.model.Crab;
@@ -99,16 +99,32 @@ public class Controller implements Initializable {
   Random rand = new Random();
 
   // creating sea creature objects
-  Fish fish = new Fish(new HorizontalMove(), new NormalRotate(), new Fade());
-  StarFish starFish = new StarFish(new VerticalMove(), new SpinRotate(), new BigSmall());
-  JellyFish jellyFish = new JellyFish(new VerticalMove(), new SpinRotate(), new Fade());
-  Crab crab = new Crab(new HorizontalMove(), new NormalRotate(), new BigSmall());
-  Turtle turtle = new Turtle(new HorizontalMove(), new NormalRotate(), new Fade());
+//  Fish fish = new Fish(new HorizontalMove(), new NormalRotate(), new Fade());
+//  StarFish starFish = new StarFish(new VerticalMove(), new SpinRotate(), new BigSmall());
+//  JellyFish jellyFish = new JellyFish(new VerticalMove(), new SpinRotate(), new Fade());
+//  Crab crab = new Crab(new HorizontalMove(), new NormalRotate(), new BigSmall());
+//  Turtle turtle = new Turtle(new HorizontalMove(), new NormalRotate(), new Fade());
+  
+//creating sea creature objects and setting their initial visibility
+  //PLEASE DO NOT DELETE THESE COMMENTS - NEED FOR DEMONSTRATION
+  //HorizontalMove()
+  //VerticalMove()
+  //SpinRotate()
+	//1
+	Fish fish = new Fish(new HorizontalMove());
+	//2
+	StarFish starFish = new StarFish(new SpinRotate());
+	//3
+	JellyFish jellyFish = new JellyFish(new VerticalMove());
+	//4
+	Crab crab = new Crab(new HorizontalMove());
+	//5
+	Turtle turtle = new Turtle(new HorizontalMove());
 
   @Override
   public void initialize(URL arg0, ResourceBundle arg1) {
-    // playMedia();
-    // songLabel.setText(songs.get(songNumber).getName());
+    playMedia();
+
     dock = new Dock("Peaceful Dock", dockStatus);
     myFish.setVisible(false);
     myStarFish.setVisible(false);
@@ -125,6 +141,16 @@ public class Controller implements Initializable {
     // add rubbish
     generateRubbish();
     changeBackgroundBasedOnDirtyness();
+    
+    fish.performMove(myFish);
+	
+	starFish.performMove(myStarFish);
+	
+	jellyFish.performMove(myJellyFish);
+	
+	turtle.performMove(myTurtle);
+	
+	crab.performMove(myCrab);
   }
 
   public void generateRubbish() {
