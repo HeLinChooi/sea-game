@@ -13,45 +13,42 @@
     <Text layoutX="7.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sea Dirtyness: " />
     <TextArea fx:id="points" editable="false" layoutX="142.0" layoutY="24.0" prefHeight="8.0" prefWidth="124.0" promptText="daf" />
     <Text layoutX="143.0" layoutY="20.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Points:  " />
-    <ImageView fx:id="myFish" fitHeight="39.0" fitWidth="84.0" layoutX="834.0" layoutY="369.0" pickOnBounds="true" preserveRatio="true">
+    <AnchorPane fx:id="rubbishAnchorPane" layoutX="15.0" layoutY="270.0" prefHeight="147.0" prefWidth="930.0" />
+    <ImageView fx:id="myFish" fitHeight="39.0" fitWidth="84.0" layoutX="834.0" layoutY="369.0" onKeyPressed="#fishButtonOnKeyboard" onMouseClicked="#fishButtonOnKeyboard" pickOnBounds="true" preserveRatio="true">
       <image>
         <Image url="@images/fish.png" />
       </image>
     </ImageView>
-    <AnchorPane fx:id="rubbishAnchorPane" layoutX="15.0" layoutY="270.0" prefHeight="147.0" prefWidth="930.0">
-         <children>
-      
-          <Button layoutY="125.0" mnemonicParsing="false" onKeyPressed="#fishButtonOnKeyboard" onMouseClicked="#fishButton" text="Fish" textFill="WHITE" />
-         </children>
-    </AnchorPane>
 
-    <ImageView fx:id="myStarFish" fitHeight="39.0" fitWidth="84.0" layoutX="681.0" layoutY="294.0" pickOnBounds="true" preserveRatio="true">
+    <ImageView fx:id="myStarFish" fitHeight="39.0" fitWidth="84.0" layoutX="681.0" layoutY="294.0" onKeyPressed="#starFishButtonOnKeyboard" onMouseClicked="#starFishButton" pickOnBounds="true" preserveRatio="true">
       <image>
         <Image url="@images/starfish.png" />
       </image>
     </ImageView>
 
-    <ImageView fx:id="myJellyFish" fitHeight="39.0" fitWidth="84.0" layoutX="268.0" layoutY="349.0" pickOnBounds="true" preserveRatio="true">
+    <ImageView fx:id="myJellyFish" fitHeight="39.0" fitWidth="84.0" layoutX="268.0" layoutY="349.0" onKeyPressed="#jellyFishButtonOnKeyboard" onMouseClicked="#jellyFishButton" pickOnBounds="true" preserveRatio="true">
       <image>
         <Image url="@images/jellyfish.png" />
       </image>
     </ImageView>
 
-    <ImageView fx:id="myCrab" fitHeight="39.0" fitWidth="84.0" layoutX="391.0" layoutY="313.0" pickOnBounds="true" preserveRatio="true">
+    <ImageView fx:id="myCrab" fitHeight="39.0" fitWidth="84.0" layoutX="391.0" layoutY="313.0" onKeyPressed="#crabButtonOnKeyboard" onMouseClicked="#crabButton" pickOnBounds="true" preserveRatio="true">
       <image>
         <Image url="@images/crab.png" />
       </image>
     </ImageView>
 
-    <ImageView fx:id="myTurtle" fitHeight="39.0" fitWidth="84.0" layoutX="124.0" layoutY="306.0" pickOnBounds="true" preserveRatio="true">
+    <ImageView fx:id="myTurtle" fitHeight="39.0" fitWidth="84.0" layoutX="124.0" layoutY="306.0" onKeyPressed="#turtleButtonOnKeyboard" onMouseClicked="#turtleButton" pickOnBounds="true" preserveRatio="true">
       <image>
         <Image url="@images/turtle.png" />
       </image>
     </ImageView>
-    <Button layoutX="94.0" layoutY="395.0" mnemonicParsing="false" onKeyPressed="#starFishButtonOnKeyboard" onMouseClicked="#starFishButton" text="Star Fish" textAlignment="CENTER" textFill="WHITE" />
-    <Button layoutX="195.0" layoutY="395.0" mnemonicParsing="false" onKeyPressed="#jellyFishButtonOnKeyboard" onMousePressed="#jellyFishButton" text="Jelly Fish" textAlignment="CENTER" textFill="WHITE" />
-    <Button layoutX="302.0" layoutY="395.0" mnemonicParsing="false" onKeyPressed="#crabButtonOnKeyboard" onMouseClicked="#crabButton" text="Crab" textAlignment="CENTER" textFill="WHITE" />
-    <Button layoutX="391.0" layoutY="395.0" mnemonicParsing="false" onKeyPressed="#turtleButtonOnKeyboard" onMouseClicked="#turtleButton" text="Turtle" textAlignment="CENTER" textFill="WHITE" />
+
+    <Button layoutX="14.0" layoutY="395.0" mnemonicParsing="false" onAction="#fishButton" text="Fish" textFill="WHITE" />
+    <Button layoutX="94.0" layoutY="395.0" mnemonicParsing="false" onAction="#starFishButton" text="Star Fish" textAlignment="CENTER" textFill="WHITE" />
+    <Button layoutX="195.0" layoutY="395.0" mnemonicParsing="false" onAction="#jellyFishButton" text="Jelly Fish" textAlignment="CENTER" textFill="WHITE" />
+    <Button layoutX="302.0" layoutY="395.0" mnemonicParsing="false" onAction="#crabButton" text="Crab" textAlignment="CENTER" textFill="WHITE" />
+    <Button layoutX="391.0" layoutY="395.0" mnemonicParsing="false" onAction="#turtleButton" text="Turtle" textAlignment="CENTER" textFill="WHITE" />
 
   </children>
 </AnchorPane>
