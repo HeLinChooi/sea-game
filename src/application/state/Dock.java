@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import javafx.application.Platform;
+import javafx.scene.control.TextArea;
 import javafx.scene.layout.AnchorPane;
 
 public class Dock {
@@ -17,9 +18,9 @@ public class Dock {
   private final String BERTHING_ERROR_MSG;
   private final String CARGO_LOADING_ERROR_MSG;
 
-  public Dock(String dockName) {
+  public Dock(String dockName, TextArea dockStatus) {
     this.DOCK_NAME = dockName;
-    objState = DockState.InitialState(this);
+    objState = DockState.InitialState(this, dockStatus);
     IDLE_ERROR_MSG = "There is no ship at the " + dockName + " dock right now. \n"
         + "Please try again after adding a ship. \n";
     BERTHING_ERROR_MSG = " is berthing at the " + dockName + " \n";
@@ -48,19 +49,19 @@ public class Dock {
     this.shipsList = shipsList;
   }
 
-  public boolean addShip(Ship ship, AnchorPane rubbishAnchorPane) {
-    if (objState.addShip(ship)) {
+  public boolean addShip(Ship ship, AnchorPane anchorPane, TextArea dockStatus) {
+    if (objState.addShip(ship, dockStatus)) {
       shipsList.add(ship);
       Platform.runLater(() -> {
-        rubbishAnchorPane.getChildren().addAll(ship.getImageView());
+        anchorPane.getChildren().addAll(ship.getImageView());
       });
       return true;
     }
     return false;
   }
 
-  public boolean makeShippingWork() {
-    return objState.makeShippingWork();
+  public boolean makeShippingWork(TextArea dockStatus) {
+    return objState.makeShippingWork(dockStatus);
   }
 
   public String getERROR_MSG() {

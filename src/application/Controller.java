@@ -74,6 +74,8 @@ public class Controller implements Initializable {
   private ImageView dockImage;
   @FXML
   private ImageView boatImage;
+  @FXML
+  private TextArea dockStatus;
 
   VisibilityManager visibilityManager;
 
@@ -86,7 +88,7 @@ public class Controller implements Initializable {
 
   private SimpleRubbishFactory simpleRubbishFactory = new SimpleRubbishFactory();
 
-  private Dock dock = new Dock("Peaceful Dock");
+  private Dock dock;
   List<String> shipNames = new ArrayList<>(Arrays.asList("Serenity Voyager", "Tranquility Explorer", "Calm Seas",
       "Peaceful Journey", "Relaxation Voyager", "Serene Voyager", "Gentle Waves", "Ocean Oasis",
       "Paradise Explorer", "Island Retreat", "Coastal Breeze", "Lazy Days", "Sunny Seas", "Paradise Cruiser",
@@ -107,7 +109,7 @@ public class Controller implements Initializable {
   public void initialize(URL arg0, ResourceBundle arg1) {
     // playMedia();
     // songLabel.setText(songs.get(songNumber).getName());
-
+    dock = new Dock("Peaceful Dock", dockStatus);
     myFish.setVisible(false);
     myStarFish.setVisible(false);
     myJellyFish.setVisible(false);
@@ -322,13 +324,13 @@ public class Controller implements Initializable {
   public void addShip() {
     int shipNameIndex = rand.nextInt(shipNames.size());
     Ship ship = new Ship(shipNames.get(shipNameIndex));
-    dock.addShip(ship, backgroundAnchorPane);
+    dock.addShip(ship, backgroundAnchorPane, dockStatus);
     shipNames.remove(shipNameIndex);
   }
 
   public void makeShipWorking() {
     System.out.println("");
-    dock.makeShippingWork();
+    dock.makeShippingWork(dockStatus);
     System.out.println(dock.toString());
   }
 }

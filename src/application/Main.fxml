@@ -54,8 +54,9 @@
             <Image url="@images/dock.png" />
          </image>
       </ImageView>
-      <Button layoutX="769.0" layoutY="22.0" mnemonicParsing="false" onAction="#addShip" text="Add Ship" textFill="WHITE" />
-      <Button layoutX="873.0" layoutY="22.0" mnemonicParsing="false" onAction="#makeShipWorking" text="Work" textFill="WHITE" />
+      <Button layoutX="830.0" layoutY="64.0" mnemonicParsing="false" onAction="#addShip" text="Add Ship" textFill="WHITE" />
+      <Button layoutX="900.0" layoutY="64.0" mnemonicParsing="false" onAction="#makeShipWorking" text="Work" textFill="WHITE" />
+      <TextArea fx:id="dockStatus" layoutX="644.0" layoutY="15.0" prefHeight="40.0" prefWidth="301.0" />
 
   </children>
 </AnchorPane>

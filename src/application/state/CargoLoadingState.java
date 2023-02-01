@@ -1,24 +1,30 @@
 package application.state;
 
+import javafx.scene.control.TextArea;
+
 public class CargoLoadingState implements DockState { // the ship is loading cargo
 
     static Dock dock;
     static Ship ship;
 
-    public CargoLoadingState(Dock dock) {
+    public CargoLoadingState(Dock dock, TextArea dockStatus) {
         CargoLoadingState.dock = dock;
-        System.out.println(dock.getDOCK_NAME() + " is busy and bustling.");
+        String str = dock.getDOCK_NAME() + " is busy and bustling.";
+        dockStatus.setText(str);
+        System.out.println(str);
     }
 
-    public CargoLoadingState(Ship ship) {
+    public CargoLoadingState(Ship ship, TextArea dockStatus) {
         CargoLoadingState.ship = ship;
-        System.out.println(CargoLoadingState.ship.getSHIP_NAME() + " is loading cargo at the dock.");
+        String str = CargoLoadingState.ship.getSHIP_NAME() + " is loading cargo at the dock.";
+        dockStatus.setText(str);
+        System.out.println(str);
     }
 
     @Override
-    public boolean makeShippingWork() {
-        ship.setState(new ShippingCargoState(ship));
-        dock.setState(new ShippingCargoState(dock));
+    public boolean makeShippingWork(TextArea dockStatus) {
+        ship.setState(new ShippingCargoState(ship, dockStatus));
+        dock.setState(new ShippingCargoState(dock, dockStatus));
         return true;
     }
 
@@ -28,7 +34,7 @@ public class CargoLoadingState implements DockState { // the ship is loading car
     }
 
     @Override
-    public boolean addShip(Ship ship) {
+    public boolean addShip(Ship ship, TextArea dockStatus) {
         System.out.println(dock.getCARGO_LOADING_ERROR_MSG(CargoLoadingState.ship.getSHIP_NAME()));
         return false;
     }

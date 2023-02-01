@@ -41,12 +41,12 @@ public class Ship {
       translate2.setDuration(Duration.millis(5000));
       translate2.setByX(-850);
       translate2.play();
-    } else if (newState instanceof ReturningState) {
-      TranslateTransition translate = new TranslateTransition();
-      translate.setNode(imageView);
-      translate.setDuration(Duration.millis(5000));
-      translate.setByX(850);
-      translate.play();
+    } else if (newState instanceof IdleState) {
+      // TranslateTransition translate = new TranslateTransition();
+      // translate.setNode(imageView);
+      // translate.setDuration(Duration.millis(5000));
+      // translate.setByX(850);
+      // translate.play();
     }
   }
 
@@ -56,9 +56,16 @@ public class Ship {
 
   public void setIsThisShipReturning(int isThisShipReturning) {
     switch (isThisShipReturning) {
-      case RETURNING:
+      case RETURNING:{
+
         this.isThisShipReturning = RETURNING;
+        TranslateTransition translate = new TranslateTransition();
+      translate.setNode(imageView);
+      translate.setDuration(Duration.millis(5000));
+      translate.setByX(850);
+      translate.play();
         break;
+      }
       case NEUTRAL:
         this.isThisShipReturning = NEUTRAL;
         break;
