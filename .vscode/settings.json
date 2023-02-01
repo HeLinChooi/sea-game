@@ -1,6 +1,6 @@
 {
   "java.dependency.packagePresentation": "hierarchical",
-  "java.jdt.ls.java.home": "C:/Program Files/Java/jdk-17",
+  "java.jdt.ls.java.home": "C:/Program Files/Java/jdk-19.0.1",
   "java.project.referencedLibraries": [
     "lib/**/*.jar",
     "d:\\Program or SDK\\javafx-sdk-19\\lib\\javafx.base.jar",
