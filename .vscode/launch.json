@@ -6,13 +6,6 @@
   "configurations": [
     {
       "type": "java",
-      "name": "Launch ShippingDockManager",
-      "request": "launch",
-      "mainClass": "SeaDesignPattern/application.state.ShippingDockManager",
-      "projectName": "SeaDesignPattern"
-    },
-    {
-      "type": "java",
       "name": "Launch Current File",
       "request": "launch",
       "mainClass": "${file}"
@@ -22,15 +15,8 @@
       "name": "Launch Main",
       "request": "launch",
       "mainClass": "SeaDesignPattern/application.Main",
-      "projectName": "SeaDesignPattern"
-    },
-    {
-      "type": "java",
-      "name": "Launch ShippingDockManager",
-      "request": "launch",
-      "mainClass": "SeaDesignPattern/application.logic.ShippingDockManager",
       "projectName": "SeaDesignPattern",
-      "vmArgs": "--module-path \"D:/Program or SDK/javafx-sdk-19/lib\" --add-modules javafx.controls,javafx.fxml"
+      
     }
   ]
 }

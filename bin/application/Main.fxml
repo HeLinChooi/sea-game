@@ -44,7 +44,7 @@
       </image>
     </ImageView>
 
-    <Button layoutX="14.0" layoutY="395.0" mnemonicParsing="false" onKeyPressed="#fishButtonOnKeyboard" onMouseClicked="#jellyFishButtonOnKeyboard" text="Fish" textFill="WHITE" />
+    <Button layoutX="14.0" layoutY="395.0" mnemonicParsing="false" onKeyPressed="#fishButtonOnKeyboard" onMouseClicked="#fishButton" text="Fish" textFill="WHITE" />
     <Button layoutX="94.0" layoutY="395.0" mnemonicParsing="false" onKeyPressed="#starFishButtonOnKeyboard" onMouseClicked="#starFishButton" text="Star Fish" textAlignment="CENTER" textFill="WHITE" />
     <Button layoutX="195.0" layoutY="395.0" mnemonicParsing="false" onKeyPressed="#jellyFishButtonOnKeyboard" onMouseClicked="#jellyFishButton" text="Jelly Fish" textAlignment="CENTER" textFill="WHITE" />
     <Button layoutX="302.0" layoutY="395.0" mnemonicParsing="false" onKeyPressed="#crabButtonOnKeyboard" onMouseClicked="#crabButton" text="Crab" textAlignment="CENTER" textFill="WHITE" />
